@@ -1,5 +1,6 @@
 ﻿using MissionControl.Models;
 using MissionControl.Models.DataAccessLayer;
+using MissionControl.Models.DTOs;
 using MissionControl.Statics;
 using System;
 using System.Collections.Generic;
@@ -82,7 +83,7 @@ namespace MissionControl.Migrations
                 //    }
                 //}
 
-                List<FacilityCentre> locations = GeneralHelper.Locations();
+                List<FacilityDTO> locations = GeneralHelper.Locations();
 
                 long unix = DateTimeOffset.Now.ToUnixTimeSeconds();
                 List<ISS> iss = RestHelper.ISSGET(unix);
@@ -93,11 +94,11 @@ namespace MissionControl.Migrations
 
                 var coord = new GeoCoordinate(lat, lng);
                 var nearest = locations.Select(x => new {
-                    loc = x.location,
-                    lat = x.latitude,
-                    lng = x.longitude,
+                    loc = x.Location,
+                    lat = x.Latitude,
+                    lng = x.Longitude,
                     time = time,
-                    dist = new GeoCoordinate(x.latitude, x.longitude).GetDistanceTo(coord)
+                    dist = new GeoCoordinate(x.Latitude, x.Longitude).GetDistanceTo(coord)
                 });
                 var near = nearest.OrderBy(x => x.dist).FirstOrDefault();
 
@@ -105,10 +106,10 @@ namespace MissionControl.Migrations
                 if (near.IsNull())
                     return true;
 
-                FacilityCentre res = new FacilityCentre() { location = near.loc, latitude = near.lat, longitude = near.lng, timestamp = near.time, distance = (int)near.dist };
+                FacilityDTO res = new FacilityDTO() { Location = near.loc, Latitude = near.lat, Longitude = near.lng, Timestamp = near.time, Distance = (int)near.dist };
                 
                 DAL dal = new DAL();
-                dal.ClosetLocationByTimeStamp(res);
+                dal.CreateClosestFacilityByTimeStamp(res);
                 
                 return true;
             }

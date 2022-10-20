@@ -349,7 +349,6 @@
     <Compile Include="Models\DB\MissionImage.cs" />
     <Compile Include="Models\DB\MissionReport.cs" />
     <Compile Include="Models\DB\User.cs" />
-    <Compile Include="Models\FacilityCentre.cs" />
     <Compile Include="Models\ViewModelUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Statics\CharacterHelper.cs" />

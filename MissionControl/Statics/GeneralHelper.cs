@@ -1,4 +1,5 @@
 ﻿using MissionControl.Models;
+using MissionControl.Models.DTOs;
 using System;
 using System.Collections.Generic;
 
@@ -22,9 +23,10 @@ namespace MissionControl.Statics
         {
             /*
              * not good
+             * finds lowest index
              * */
-            double test = 1000.0;
-            int res = 1000;
+            double test = double.MaxValue;
+            int res = int.MaxValue;
             for (int i = 0; i < list.Count; i++)
             {
                 if (!_contains.Contains(list[i]) && list[i] < test)
@@ -42,9 +44,10 @@ namespace MissionControl.Statics
         {
             /*
              * good
+             * finds lowest index
              * */
-            double test = 1000.0d;
-            int res = 1000;
+            double test = double.MaxValue;
+            int res = int.MaxValue;
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i] < test)
@@ -53,8 +56,11 @@ namespace MissionControl.Statics
                     res = i;
                 }
             }
-                        
-            list[res] = 999.0d;
+
+            /*
+             * we set it to something high, so it wont count in next iteration
+             * */
+            list[res] = double.MaxValue - 1.0d;
             return res;
         }
 
@@ -97,16 +103,16 @@ namespace MissionControl.Statics
             return _a;
         }
 
-        public static List<FacilityCentre> Locations() 
+        public static List<FacilityDTO> Locations() 
         {
-            List<FacilityCentre> list = new List<FacilityCentre>();
-            list.Add(new FacilityCentre() { location = "Europe", latitude = 55.68474022214539, longitude = 12.50971483525464 });
-            list.Add(new FacilityCentre() { location = "China", latitude = 41.14962602664463, longitude = 119.33727554032843 });
-            list.Add(new FacilityCentre() { location = "America", latitude = 40.014407426017335, longitude = -103.68329704730307 });
-            list.Add(new FacilityCentre() { location = "Africa", latitude = -21.02973667221353, longitude = 23.77076788325546 });
-            list.Add(new FacilityCentre() { location = "Australia", latitude = -33.00702098732439, longitude = 117.83314818861444 });
-            list.Add(new FacilityCentre() { location = "India", latitude = 19.330540162912126, longitude = 79.14236662251713 });
-            list.Add(new FacilityCentre() { location = "Argentina", latitude = -34.050351176517886, longitude = -65.92682965568743 });
+            List<FacilityDTO> list = new List<FacilityDTO>();
+            list.Add(new FacilityDTO() { Location = "Europe", Latitude = 55.68474022214539, Longitude = 12.50971483525464 });
+            list.Add(new FacilityDTO() { Location = "China", Latitude = 41.14962602664463, Longitude = 119.33727554032843 });
+            list.Add(new FacilityDTO() { Location = "America", Latitude = 40.014407426017335, Longitude = -103.68329704730307 });
+            list.Add(new FacilityDTO() { Location = "Africa", Latitude = -21.02973667221353, Longitude = 23.77076788325546 });
+            list.Add(new FacilityDTO() { Location = "Australia", Latitude = -33.00702098732439, Longitude = 117.83314818861444 });
+            list.Add(new FacilityDTO() { Location = "India", Latitude = 19.330540162912126, Longitude = 79.14236662251713 });
+            list.Add(new FacilityDTO() { Location = "Argentina", Latitude = -34.050351176517886, Longitude = -65.92682965568743 });
 
             return list;
         }

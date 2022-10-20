@@ -59,12 +59,16 @@ namespace MissionControl.Controllers
                 ResultForecast1 _res = new ResultForecast1();
                 Dictionary<string, string> res = new Dictionary<string, string>();
 
-                FacilityDTO dto = dal.GetClosest();
+                FacilityDTO dto = dal.GetClosest5min();
                 Forecast fcast_a = RestHelper.ForecastGET(dto.Latitude, dto.Longitude);
                 Forecast fcast_b = GeneralHelper.Copy(fcast_a);
                 res = GeneralHelper.GetLowestTemps(fcast_a, fcast_b, number);
                 
                 _res.results = res;
+                _res.location = dto.Location;
+                _res.latitude = dto.Latitude;
+                _res.longitude = dto.Longitude;
+                _res.distance = dto.Distance;
                 _res.Message = "";
                 
                 return new JsonHttpStatusResult<ResultForecast1>(_res, this, HttpStatusCode.OK);

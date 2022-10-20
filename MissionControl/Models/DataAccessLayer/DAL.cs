@@ -6,18 +6,18 @@ namespace MissionControl.Models.DataAccessLayer
 {
     public class DAL
     {
-        public void ClosetLocationByTimeStamp(FacilityCentre _f)
+        public void CreateClosestFacilityByTimeStamp(FacilityDTO _f)
         {
             FacilityBIZ biz = new FacilityBIZ();
 
             biz.CreateFacility(_f);
         }
 
-        public FacilityDTO GetClosest()
+        public FacilityDTO GetClosest5min()
         {
             FacilityBIZ biz = new FacilityBIZ();
 
-            return biz.GetClosest();
+            return biz.GetClosest5min();
         }
 
         public List<UserDTO> GetUsers()

@@ -16,7 +16,7 @@ namespace MissionControl.Models.BIZs
         public long Timestamp { get; set; }
         public int Distance { get; set; }
 
-        public void CreateFacility(FacilityCentre _f)
+        public void CreateFacility(FacilityDTO _f)
         {
             if (_f.IsNull())
                 throw new Exception("some error");
@@ -24,11 +24,11 @@ namespace MissionControl.Models.BIZs
             using (DBContext _db = new DBContext())
             {
                 Facilitys __f = new Facilitys();
-                __f.Location = _f.location;
-                __f.Latitude = _f.latitude;
-                __f.Longitude = _f.longitude;
-                __f.Timestamp = _f.timestamp;
-                __f.Distance = _f.distance;
+                __f.Location = _f.Location;
+                __f.Latitude = _f.Latitude;
+                __f.Longitude = _f.Longitude;
+                __f.Timestamp = _f.Timestamp;
+                __f.Distance = _f.Distance;
 
                 _db.facilitys.Add(__f);
 
@@ -36,13 +36,13 @@ namespace MissionControl.Models.BIZs
             }
         }
 
-        public FacilityDTO GetClosest()
+        public FacilityDTO GetClosest5min()
         {
             using (DBContext _db = new DBContext())
             {
                 IQueryable<Facilitys> _q = _db.facilitys
                     .Where(x => x.Distance != 0)
-                    .OrderBy(x => x.Distance)
+                    .OrderByDescending(x => x.Timestamp)
                     .Take(5);
 
                 Facilitys _f = _q.AsEnumerable().FirstOrDefault();
