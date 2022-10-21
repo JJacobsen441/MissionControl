@@ -78,6 +78,8 @@ namespace MissionControl.Models
         public string location { get; set; }
         public double latitude { get; set; }
         public double longitude { get; set; }
+        public double iss_latitude { get; set; }
+        public double iss_longitude { get; set; }
         public int distance { get; set; }
         public Dictionary<string, string> results { get; set; }
 

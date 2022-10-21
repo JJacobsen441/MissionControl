@@ -50,7 +50,7 @@ namespace MissionControl.Controllers
         [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
         [HttpGet]
         [Route("mission/users")]
-        public JsonResult<ResultUsers1> Read()
+        public JsonResult<ResultUsers1> GetUsers()
         {
             /*
              * endpoint name and function name, does not have to match
@@ -78,7 +78,7 @@ namespace MissionControl.Controllers
         [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
         [HttpGet]
         [Route("mission/user/{id}")]
-        public JsonResult<ResultUser2> Read(long id)
+        public JsonResult<ResultUser2> GetUser(long id)
         {
             /*
              * endpoint name and function name, does not have to match
@@ -106,7 +106,7 @@ namespace MissionControl.Controllers
         [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
         [HttpPost]
         [Route("mission/user")]
-        public JsonResult<ResultUser3> Create(ViewModelUserPost _u)
+        public JsonResult<ResultUser3> CreateUser(ViewModelUserPost _u)
         {
             /*
              * should be url encoded
@@ -142,7 +142,7 @@ namespace MissionControl.Controllers
         [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
         [HttpPut]
         [Route("mission/user")]
-        public JsonResult<ResultUser3> Update(ViewModelUserPut _u)
+        public JsonResult<ResultUser3> UpdateUser(ViewModelUserPut _u)
         {
             /*
              * should be url encoded
@@ -178,7 +178,7 @@ namespace MissionControl.Controllers
         [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
         [HttpDelete]
         [Route("mission/user/{id}")]
-        public JsonResult<ResultUser3> Delete(long id)
+        public JsonResult<ResultUser3> DeleteUser(long id)
         {
             /*
              * should be url encoded

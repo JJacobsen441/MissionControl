@@ -26,7 +26,7 @@ namespace MissionControl.Models.BIZs
         {
             using (DBContext _db = new DBContext())
             {
-                IQueryable<User> _q = _db.users;
+                IQueryable<User> _q = _db.users.OrderBy(x=>x.Id);
                 
                 IEnumerable<User> _u = _q.AsEnumerable().ToList();
 
@@ -108,6 +108,9 @@ namespace MissionControl.Models.BIZs
 
                 if (user.IsNull())
                     throw new Exception("user does not exist");
+
+                //foreach (MissionReport _m in user.missionreports)
+                //    _db.reports.Remove(_m);
 
                 _db.users.Remove(user);
 

@@ -111,6 +111,10 @@ MissionControl.Migrations.UpdateFKMissionReportsNotNullable, MissionControl, Ver
 MissionControl.Migrations.UpdateFKMissionImagesNotNullable, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MissionControl.Migrations.AddFacilitysTable, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MissionControl.Migrations.AddColumn, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+MissionControl.Migrations.UpdateFKMissionReportsOnDelete, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+MissionControl.Migrations.UpdateFKMissionImagesOnDelete, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+MissionControl.Migrations.AddColumnISSLatitude, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+MissionControl.Migrations.AddColumnISSLongitude, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MissionControl.Migrations.ScheduleComposer, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MissionControl.Controllers.ApiReportController, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MissionControl.Controllers.ApiUserController, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null

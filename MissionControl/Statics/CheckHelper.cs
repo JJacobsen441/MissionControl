@@ -49,6 +49,10 @@ namespace MissionControl.Statics
             _ok = true;
             if (val == 0)
                 _ok = false;
+
+            if (val < 0)
+                _ok = false;
+
             return val;
         }
 

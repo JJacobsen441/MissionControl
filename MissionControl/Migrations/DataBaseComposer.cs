@@ -81,10 +81,18 @@ namespace MissionControl.Migrations
                 .To<AddColumn>("add-column");
 
 
+            migrationPlan.From("add-column")
+                .To<UpdateFKMissionReportsOnDelete>("update-fk-missionreports-on-delete");
 
-            
+            migrationPlan.From("update-fk-missionreports-on-delete")
+                .To<UpdateFKMissionImagesOnDelete>("update-fk-missionimages-on-delete");
 
 
+            migrationPlan.From("update-fk-missionimages-on-delete")
+                .To<AddColumnISSLatitude>("add-column-isslatitude");
+
+            migrationPlan.From("add-column-isslatitude")
+                .To<AddColumnISSLongitude>("add-column-isslongitude");
 
 
 
@@ -496,6 +504,111 @@ namespace MissionControl.Migrations
             else
             {
                 Logger.Debug<AddColumn>("The column in {DbTable} already exists, skipping", "AddColumn");
+            }
+        }
+    }
+
+    public class UpdateFKMissionReportsOnDelete : MigrationBase
+    {
+        public UpdateFKMissionReportsOnDelete(IMigrationContext context) : base(context)
+        {
+        }
+
+        public override void Migrate()
+        {
+            Logger.Debug<UpdateFKMissionReports>("Running migration {MigrationStep}", "UpdateFKMissionReports");
+
+            // Lots of methods available in the MigrationBase class - discover with this.
+            if (TableExists("MissionReports"))
+            {
+                Execute.Sql(
+                "ALTER TABLE MissionReports DROP CONSTRAINT FK_MissionReports_Users"
+                ).Do();
+                Execute.Sql(
+                "ALTER TABLE MissionReports ADD " +
+                    "CONSTRAINT FK_MissionReports_Users FOREIGN KEY (UserId) " +
+                    "REFERENCES Users(Id) " +
+                    "ON DELETE CASCADE"
+                ).Do();
+            }
+            else
+            {
+                Logger.Debug<UpdateFKMissionReportsOnDelete>("The database table {DbTable} already exists, skipping", "UpdateFKMissionReportsOnDelete");
+            }
+        }
+    }
+
+    public class UpdateFKMissionImagesOnDelete : MigrationBase
+    {
+        public UpdateFKMissionImagesOnDelete(IMigrationContext context) : base(context)
+        {
+        }
+
+        public override void Migrate()
+        {
+            Logger.Debug<UpdateFKMissionImages>("Running migration {MigrationStep}", "UpdateFKMissionImages");
+
+            // Lots of methods available in the MigrationBase class - discover with this.
+            if (TableExists("MissionImages"))
+            {
+                Execute.Sql(
+                "ALTER TABLE MissionImages DROP CONSTRAINT FK_MissionImages_MissionReports"
+                ).Do();
+                Execute.Sql(
+                "ALTER TABLE MissionImages ADD " +
+                    "CONSTRAINT FK_MissionImages_MissionReports FOREIGN KEY (MissionReportId) " +
+                    "REFERENCES MissionReports(Id) ON DELETE CASCADE"
+                ).Do();
+            }
+            else
+            {
+                Logger.Debug<UpdateFKMissionImagesOnDelete>("The database table {DbTable} already exists, skipping", "UpdateFKMissionImagesOnDelete");
+            }
+        }
+    }
+
+    public class AddColumnISSLatitude : MigrationBase
+    {
+        public AddColumnISSLatitude(IMigrationContext context) : base(context)
+        {
+        }
+
+        public override void Migrate()
+        {
+            Logger.Debug<AddColumn>("Running migration {MigrationStep}", "AddColumnISSLatitude");
+
+            // Lots of methods available in the MigrationBase class - discover with this.
+            if (!ColumnExists("Facilitys", "ISSLatitude"))
+            {
+                //Create.Column("xxxx").OnTable("Users").AsInt32().Do();
+                Create.Column("ISSLatitude").OnTable("Facilitys").AsDouble().NotNullable().WithDefaultValue(0.0d).Do();
+            }
+            else
+            {
+                Logger.Debug<AddColumnISSLatitude>("The column in {DbTable} already exists, skipping", "AddColumnISSLatitude");
+            }
+        }
+    }
+
+    public class AddColumnISSLongitude : MigrationBase
+    {
+        public AddColumnISSLongitude(IMigrationContext context) : base(context)
+        {
+        }
+
+        public override void Migrate()
+        {
+            Logger.Debug<AddColumn>("Running migration {MigrationStep}", "AddColumnISSLongitude");
+
+            // Lots of methods available in the MigrationBase class - discover with this.
+            if (!ColumnExists("Facilitys", "ISSLongitude"))
+            {
+                //Create.Column("xxxx").OnTable("Users").AsInt32().Do();
+                Create.Column("ISSLongitude").OnTable("Facilitys").AsDouble().NotNullable().WithDefaultValue(0.0d).Do();
+            }
+            else
+            {
+                Logger.Debug<AddColumnISSLongitude>("The column in {DbTable} already exists, skipping", "AddColumnISSLongitude");
             }
         }
     }

@@ -106,7 +106,7 @@ namespace MissionControl.Migrations
                 if (near.IsNull())
                     return true;
 
-                FacilityDTO res = new FacilityDTO() { Location = near.loc, Latitude = near.lat, Longitude = near.lng, Timestamp = near.time, Distance = (int)near.dist };
+                FacilityDTO res = new FacilityDTO() { Location = near.loc, Latitude = near.lat, Longitude = near.lng, Timestamp = near.time, Distance = (int)near.dist, ISSLatitude = lat, ISSLongitude = lng };
                 
                 DAL dal = new DAL();
                 dal.CreateClosestFacilityByTimeStamp(res);

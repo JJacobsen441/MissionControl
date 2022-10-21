@@ -11,6 +11,8 @@ namespace MissionControl.Models.DB
         public string Location { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public double ISSLatitude { get; set; }
+        public double ISSLongitude { get; set; }
         public long Timestamp { get; set; }
         /*
          * should probably have been a long

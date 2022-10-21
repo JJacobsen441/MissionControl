@@ -6,7 +6,6 @@ using MissionControl.Statics;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -47,7 +46,7 @@ namespace MissionControl.Controllers
         [BasicAuthenticationFilter("WeatherControl", "asdf123456", BasicRealm = "mydomain")]
         [HttpGet]
         [Route("weather/forecast/{number}")]
-        public JsonResult<ResultForecast1> Forecast(int number)
+        public JsonResult<ResultForecast1> GetForecast(int number)
         {
             /*
              * endpoint name and function name, does not have to match
@@ -68,6 +67,8 @@ namespace MissionControl.Controllers
                 _res.location = dto.Location;
                 _res.latitude = dto.Latitude;
                 _res.longitude = dto.Longitude;
+                _res.iss_latitude = dto.ISSLatitude;
+                _res.iss_longitude = dto.ISSLongitude;
                 _res.distance = dto.Distance;
                 _res.Message = "";
                 

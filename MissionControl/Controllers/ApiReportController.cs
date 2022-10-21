@@ -50,7 +50,7 @@ namespace MissionControl.Controllers
         [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
         [HttpGet]
         [Route("mission/missionreports")]
-        public JsonResult<ResultReport1> Read()
+        public JsonResult<ResultReport1> GetMissionReports()
         {
             /*
              * endpoint name and function name, does not have to match
@@ -78,7 +78,7 @@ namespace MissionControl.Controllers
         [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
         [HttpGet]
         [Route("mission/missionreport/{id}")]
-        public JsonResult<ResultReport2> Read(long id)
+        public JsonResult<ResultReport2> GetMissionReport(long id)
         {
             /*
              * endpoint name and function name, does not have to match
@@ -106,7 +106,7 @@ namespace MissionControl.Controllers
         [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
         [HttpPost]
         [Route("mission/missionreport")]
-        public JsonResult<ResultReport3> Create(ViewModelMissionreportPost _m)
+        public JsonResult<ResultReport3> CreateMissionReport(ViewModelMissionreportPost _m)
         {
             /*
              * should be url encoded
@@ -142,7 +142,7 @@ namespace MissionControl.Controllers
         [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
         [HttpPut]
         [Route("mission/missionreport")]
-        public JsonResult<ResultReport3> Update(ViewModelMissionreportPut _m)
+        public JsonResult<ResultReport3> UpdateMissionReport(ViewModelMissionreportPut _m)
         {
             /*
              * should be url encoded
@@ -178,7 +178,7 @@ namespace MissionControl.Controllers
         [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
         [HttpDelete]
         [Route("mission/missionreport/{id}")]
-        public JsonResult<ResultReport3> Delete(long id)
+        public JsonResult<ResultReport3> DeleteMissionReport(long id)
         {
             /*
              * should be url encoded

@@ -27,6 +27,8 @@ namespace MissionControl.Models.BIZs
                 __f.Location = _f.Location;
                 __f.Latitude = _f.Latitude;
                 __f.Longitude = _f.Longitude;
+                __f.ISSLatitude = _f.ISSLatitude;
+                __f.ISSLongitude = _f.ISSLongitude;
                 __f.Timestamp = _f.Timestamp;
                 __f.Distance = _f.Distance;
 
@@ -77,6 +79,8 @@ namespace MissionControl.Models.BIZs
             dto.Location = !_f.Location.IsNull() ? _f.Location : "";
             dto.Latitude = !_f.Latitude.IsNull() ? _f.Latitude : 0.0d;
             dto.Longitude = !_f.Longitude.IsNull() ? _f.Longitude : 0.0d;
+            dto.ISSLatitude = !_f.ISSLatitude.IsNull() ? _f.ISSLatitude : 0.0d;
+            dto.ISSLongitude = !_f.ISSLongitude.IsNull() ? _f.ISSLongitude : 0.0d;
             dto.Distance = !_f.Distance.IsNull() ? _f.Distance : -1;
             dto.Timestamp = !_f.Timestamp.IsNull() ? _f.Timestamp : -1;
             
