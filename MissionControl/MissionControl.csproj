@@ -332,9 +332,9 @@
     <Compile Include="Controllers\ApiUserController.cs" />
     <Compile Include="Controllers\WeatherController.cs" />
     <Compile Include="Filters\BasicAuthenticationAttribute.cs" />
-    <Compile Include="Migrations\ActionFilterComposer.cs" />
     <Compile Include="Migrations\AttributeRoutingComposer.cs" />
     <Compile Include="Migrations\DataBaseComposer.cs" />
+    <Compile Include="Migrations\ModelBinderComposer.cs" />
     <Compile Include="Migrations\ScheduleComposer.cs" />
     <Compile Include="Models\BIZs\FacilityBIZ.cs" />
     <Compile Include="Models\BIZs\MissionReportBIZ.cs" />

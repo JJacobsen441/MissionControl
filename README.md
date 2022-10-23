@@ -7,7 +7,7 @@ pass - asdf123456
 Ingeniørene fra MissionControl har haft travlt de seneste par dage, men synes de er nået i mål:)  
   
 Noter:  
-Opgaven blev løst i Umbraco. ved nærmere omtanke havde det måske været bedre med et standart WebApi.  
+Opgaven blev løst i Umbraco. ville nok have valgt standart WebApi (tror jeg var farvet af stillingbetegnelsen).  
 Der er ikke lavet frontend, da alle opgaverne kunne løses som api løsninger.  
 Jeg har muligvis misforstået opgaven fra Specs 2 (den var meget løst beskrevet).  
 Jeg havde nogle problemer med authentication, så dette gik der meget tid på.  
@@ -33,3 +33,6 @@ GetMissinReports.GetMissinReports	- orderby id
 ApiUserController					- updated function names  
 ApiReportController					- updated function names  
 WeatherController					- updated function names  
+
+CheckHelper							- adjusted checks for inputstrings  
+CustomBinderComposer				- added ModelBinder for endpoint mission/missionreport post/put

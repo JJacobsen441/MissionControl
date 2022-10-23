@@ -1,4 +1,5 @@
 ﻿using MissionControl.Filters;
+using MissionControl.Migrations;
 using MissionControl.Models;
 using MissionControl.Models.DataAccessLayer;
 using MissionControl.Models.DTOs;
@@ -12,11 +13,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
 using System.Web.Http.Results;
 using Umbraco.Web.WebApi;
 
 namespace MissionControl.Controllers
 {
+
+    
     //[Authorize]
     public class ApiReportController : UmbracoApiController
     {
@@ -48,8 +52,8 @@ namespace MissionControl.Controllers
 
 
         [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
-        [HttpGet]
-        [Route("mission/missionreports")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("mission/missionreports")]
         public JsonResult<ResultReport1> GetMissionReports()
         {
             /*
@@ -76,8 +80,8 @@ namespace MissionControl.Controllers
         }
 
         [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
-        [HttpGet]
-        [Route("mission/missionreport/{id}")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("mission/missionreport/{id}")]
         public JsonResult<ResultReport2> GetMissionReport(long id)
         {
             /*
@@ -102,11 +106,50 @@ namespace MissionControl.Controllers
                 return new JsonHttpStatusResult<ResultReport2>(res, this, HttpStatusCode.BadRequest);
             }
         }
+                
+        [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("mission/missionreport")]
+        public JsonResult<ResultReport3> CreateMissionReport([ModelBinder(typeof(MissionPostCustomBinder))] ViewModelMissionreportPost _m)
+        {
+            /*
+             * should be url encoded
+             * endpoint name and function name, does not have to match
+             * remember to sanitize inputs. invalid characters, html tags...
+             * this isnt fully sanitized, we should also check for XSS
+             * EF handles sql injections
+             * */
+
+            try
+            {
+                ResultReport3 res = new ResultReport3();
+                res.Message = "wrong input";
+                
+                if (ModelState.IsValid)
+                {
+                    if (CheckHelper.CheckMissionReport(_m))
+                    {
+                        DAL dal = new DAL();
+                        dal.CreateMissionReport(_m);
+                        res.Message = "report created";
+
+                        return new JsonHttpStatusResult<ResultReport3>(res, this, HttpStatusCode.OK);
+                    }
+                }
+
+                return new JsonHttpStatusResult<ResultReport3>(res, this, HttpStatusCode.OK);
+            }
+            catch (Exception _e)
+            {
+                ResultReport3 res = new ResultReport3 { Message = _e.Message };
+                return new JsonHttpStatusResult<ResultReport3>(res, this, HttpStatusCode.BadRequest);
+            }
+        }
 
         [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
-        [HttpPost]
-        [Route("mission/missionreport")]
-        public JsonResult<ResultReport3> CreateMissionReport(ViewModelMissionreportPost _m)
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("mission/missionreport")]
+        public JsonResult<ResultReport3> UpdateMissionReport([ModelBinder(typeof(MissionPutCustomBinder))] ViewModelMissionreportPut _m)
         {
             /*
              * should be url encoded
@@ -121,13 +164,16 @@ namespace MissionControl.Controllers
                 ResultReport3 res = new ResultReport3();
                 res.Message = "wrong input";
 
-                if (CheckHelper.CheckMissionReport(_m))
+                if(ModelState.IsValid)
                 {
-                    DAL dal = new DAL();
-                    dal.CreateMissionReport(_m);
-                    res.Message = "report created";
+                    if (CheckHelper.CheckMissionReport(_m))
+                    {
+                        DAL dal = new DAL();
+                        dal.UpdateMissionReport(_m);
+                        res.Message = "report updated";
 
-                    return new JsonHttpStatusResult<ResultReport3>(res, this, HttpStatusCode.OK);
+                        return new JsonHttpStatusResult<ResultReport3>(res, this, HttpStatusCode.OK);
+                    }
                 }
 
                 return new JsonHttpStatusResult<ResultReport3>(res, this, HttpStatusCode.OK);
@@ -140,44 +186,8 @@ namespace MissionControl.Controllers
         }
 
         [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
-        [HttpPut]
-        [Route("mission/missionreport")]
-        public JsonResult<ResultReport3> UpdateMissionReport(ViewModelMissionreportPut _m)
-        {
-            /*
-             * should be url encoded
-             * endpoint name and function name, does not have to match
-             * remember to sanitize inputs. invalid characters, html tags...
-             * this isnt fully sanitized, we should also check for XSS
-             * EF handles sql injections
-             * */
-
-            try
-            {
-                ResultReport3 res = new ResultReport3();
-                res.Message = "wrong input";
-
-                if (CheckHelper.CheckMissionReport(_m))
-                {
-                    DAL dal = new DAL();
-                    dal.UpdateMissionReport(_m);
-                    res.Message = "report updated";
-
-                    return new JsonHttpStatusResult<ResultReport3>(res, this, HttpStatusCode.OK);
-                }
-
-                return new JsonHttpStatusResult<ResultReport3>(res, this, HttpStatusCode.OK);
-            }
-            catch (Exception _e)
-            {
-                ResultReport3 res = new ResultReport3 { Message = _e.Message };
-                return new JsonHttpStatusResult<ResultReport3>(res, this, HttpStatusCode.BadRequest);
-            }
-        }
-
-        [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
-        [HttpDelete]
-        [Route("mission/missionreport/{id}")]
+        [System.Web.Http.HttpDelete]
+        [System.Web.Http.Route("mission/missionreport/{id}")]
         public JsonResult<ResultReport3> DeleteMissionReport(long id)
         {
             /*
