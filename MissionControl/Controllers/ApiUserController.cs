@@ -47,7 +47,7 @@ namespace MissionControl.Controllers
 
 
 
-        [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
+        [BasicAuthenticationFilter()]
         [HttpGet]
         [Route("mission/users")]
         public JsonResult<ResultUsers1> GetUsers()
@@ -75,7 +75,7 @@ namespace MissionControl.Controllers
             }
         }
 
-        [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
+        [BasicAuthenticationFilter()]
         [HttpGet]
         [Route("mission/user/{id}")]
         public JsonResult<ResultUser2> GetUser(long id)
@@ -103,7 +103,7 @@ namespace MissionControl.Controllers
             }
         }
 
-        [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
+        [BasicAuthenticationFilter()]
         [HttpPost]
         [Route("mission/user")]
         public JsonResult<ResultUser3> CreateUser(ViewModelUserPost _u)
@@ -139,7 +139,7 @@ namespace MissionControl.Controllers
             }
         }
 
-        [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
+        [BasicAuthenticationFilter()]
         [HttpPut]
         [Route("mission/user")]
         public JsonResult<ResultUser3> UpdateUser(ViewModelUserPut _u)
@@ -175,7 +175,7 @@ namespace MissionControl.Controllers
             }
         }
 
-        [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
+        [BasicAuthenticationFilter()]
         [HttpDelete]
         [Route("mission/user/{id}")]
         public JsonResult<ResultUser3> DeleteUser(long id)

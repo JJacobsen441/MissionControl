@@ -16,10 +16,13 @@ namespace MissionControl.Filters
         protected string Username { get; set; }
         protected string Password { get; set; }
 
-        public BasicAuthenticationFilter(string username, string password)
+        public BasicAuthenticationFilter(/*string username, string password*/)
         {
-            this.Username = username;
-            this.Password = password;
+            //this.Username = username;
+            //this.Password = password;
+
+            this.Username = Statics.StaticsHelper.AppSettings("name");
+            this.Password = Statics.StaticsHelper.AppSettings("pass");
         }
 
         public override void OnActionExecuting(HttpActionContext context)

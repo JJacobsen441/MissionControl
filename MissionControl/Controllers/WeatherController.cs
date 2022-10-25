@@ -43,7 +43,7 @@ namespace MissionControl.Controllers
         
 
 
-        [BasicAuthenticationFilter("WeatherControl", "asdf123456", BasicRealm = "mydomain")]
+        [BasicAuthenticationFilter()]
         [HttpGet]
         [Route("weather/forecast/{number}")]
         public JsonResult<ResultForecast1> GetForecast(int number)

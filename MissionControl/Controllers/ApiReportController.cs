@@ -51,7 +51,7 @@ namespace MissionControl.Controllers
 
 
 
-        [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
+        [BasicAuthenticationFilter()]
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("mission/missionreports")]
         public JsonResult<ResultReport1> GetMissionReports()
@@ -79,7 +79,7 @@ namespace MissionControl.Controllers
             }
         }
 
-        [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
+        [BasicAuthenticationFilter()]
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("mission/missionreport/{id}")]
         public JsonResult<ResultReport2> GetMissionReport(long id)
@@ -106,8 +106,8 @@ namespace MissionControl.Controllers
                 return new JsonHttpStatusResult<ResultReport2>(res, this, HttpStatusCode.BadRequest);
             }
         }
-                
-        [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
+
+        [BasicAuthenticationFilter()]
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("mission/missionreport")]
         public JsonResult<ResultReport3> CreateMissionReport([ModelBinder(typeof(MissionPostCustomBinder))] ViewModelMissionreportPost _m)
@@ -146,7 +146,7 @@ namespace MissionControl.Controllers
             }
         }
 
-        [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
+        [BasicAuthenticationFilter()]
         [System.Web.Http.HttpPut]
         [System.Web.Http.Route("mission/missionreport")]
         public JsonResult<ResultReport3> UpdateMissionReport([ModelBinder(typeof(MissionPutCustomBinder))] ViewModelMissionreportPut _m)
@@ -185,7 +185,7 @@ namespace MissionControl.Controllers
             }
         }
 
-        [BasicAuthenticationFilter("MissionControl", "asdf123456", BasicRealm = "mydomain")]
+        [BasicAuthenticationFilter()]
         [System.Web.Http.HttpDelete]
         [System.Web.Http.Route("mission/missionreport/{id}")]
         public JsonResult<ResultReport3> DeleteMissionReport(long id)
