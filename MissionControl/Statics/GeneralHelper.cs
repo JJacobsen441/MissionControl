@@ -25,6 +25,8 @@ namespace MissionControl.Statics
              * not good
              * finds lowest index
              * */
+
+
             double test = double.MaxValue;
             int res = int.MaxValue;
             for (int i = 0; i < list.Count; i++)
@@ -66,6 +68,18 @@ namespace MissionControl.Statics
 
         public static Dictionary<string, string> GetLowestTemps(Forecast fcast_a, Forecast fcast_b, int number) 
         {
+            /*
+             * this algorithm return the correct result, but has very poor performance
+             * since i have just discovered this, I wont implement it, since it will just be copy/paste for the heap implementetion
+             * the BigO notation for this is O(nlogn)
+             * 
+             * for each element x:
+             *     if (heap.size() < k):
+             *         heap.add(x)
+             *     else if x < heap.max():
+             *         heap.pop()
+             *         heap.add(x)
+             * */
             Dictionary<string, string> res = new Dictionary<string, string>();
             List<string> times = fcast_a.hourly.time;
             List<double> temps_a = fcast_a.hourly.temperature_2m;

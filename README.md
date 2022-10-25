@@ -38,3 +38,5 @@ CheckHelper							- adjusted checks for inputstrings
 CustomBinderComposer				- added ModelBinder for endpoint mission/missionreport post/put
 
 BasicAuthenticationFilter			- updated to retrieve name, pass from webconfig
+
+GeneralHelper.GetLowestTemps		- updated algorithm for lowest temps

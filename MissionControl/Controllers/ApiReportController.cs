@@ -113,10 +113,8 @@ namespace MissionControl.Controllers
         public JsonResult<ResultReport3> CreateMissionReport([ModelBinder(typeof(MissionPostCustomBinder))] ViewModelMissionreportPost _m)
         {
             /*
-             * should be url encoded
              * endpoint name and function name, does not have to match
              * remember to sanitize inputs. invalid characters, html tags...
-             * this isnt fully sanitized, we should also check for XSS
              * EF handles sql injections
              * */
 
@@ -152,10 +150,8 @@ namespace MissionControl.Controllers
         public JsonResult<ResultReport3> UpdateMissionReport([ModelBinder(typeof(MissionPutCustomBinder))] ViewModelMissionreportPut _m)
         {
             /*
-             * should be url encoded
              * endpoint name and function name, does not have to match
              * remember to sanitize inputs. invalid characters, html tags...
-             * this isnt fully sanitized, we should also check for XSS
              * EF handles sql injections
              * */
 
@@ -191,10 +187,8 @@ namespace MissionControl.Controllers
         public JsonResult<ResultReport3> DeleteMissionReport(long id)
         {
             /*
-             * should be url encoded
              * endpoint name and function name, does not have to match
              * remember to sanitize inputs. invalid characters, html tags...
-             * this isnt fully sanitized, we should also check for XSS
              * EF handles sql injections
              * */
 

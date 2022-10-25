@@ -109,10 +109,8 @@ namespace MissionControl.Controllers
         public JsonResult<ResultUser3> CreateUser(ViewModelUserPost _u)
         {
             /*
-             * should be url encoded
              * endpoint name and function name, does not have to match
              * remember to sanitize inputs. invalid characters, html tags...
-             * this isnt fully sanitized, we should also check for XSS
              * EF handles sql injections
              * */
 
@@ -145,10 +143,8 @@ namespace MissionControl.Controllers
         public JsonResult<ResultUser3> UpdateUser(ViewModelUserPut _u)
         {
             /*
-             * should be url encoded
              * endpoint name and function name, does not have to match
              * remember to sanitize inputs. invalid characters, html tags...
-             * this isnt fully sanitized, we should also check for XSS
              * EF handles sql injections
              * */
 
@@ -181,10 +177,8 @@ namespace MissionControl.Controllers
         public JsonResult<ResultUser3> DeleteUser(long id)
         {
             /*
-             * should be url encoded
              * endpoint name and function name, does not have to match
              * remember to sanitize inputs. invalid characters, html tags...
-             * this isnt fully sanitized, we should also check for XSS
              * EF handles sql injections
              * */
 

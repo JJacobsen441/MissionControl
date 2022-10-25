@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MissionControl.Statics;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http.Controllers;
@@ -21,8 +22,8 @@ namespace MissionControl.Filters
             //this.Username = username;
             //this.Password = password;
 
-            this.Username = Statics.StaticsHelper.AppSettings("name");
-            this.Password = Statics.StaticsHelper.AppSettings("pass");
+            this.Username = StaticsHelper.AppSettings("name");
+            this.Password = StaticsHelper.AppSettings("pass");
         }
 
         public override void OnActionExecuting(HttpActionContext context)
