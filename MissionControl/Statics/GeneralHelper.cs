@@ -77,8 +77,6 @@ namespace MissionControl.Statics
         public static List<Res> GetLowestTemps(Forecast fcast_a, Forecast fcast_b, int number) 
         {
             /*
-             * this algorithm return the correct result, but has very poor performance
-             * since i have just discovered this, I wont implement it, since it will just be copy/paste for the heap implementetion
              * the BigO notation for this is O(nlogn)
              * 
              * for each element x:
@@ -90,7 +88,6 @@ namespace MissionControl.Statics
              * */
 
             List<Res> res = new List<Res>();
-            List<int> index = new List<int>();
             List<string> times = fcast_a.hourly.time;
             List<double> temps_a = fcast_a.hourly.temperature_2m;
             HeapMax heap = new HeapMax(number);
@@ -101,50 +98,27 @@ namespace MissionControl.Statics
             if (number < 0)
                 throw new Exception("to low number");
 
-            
+            int i = 0;
             foreach (double x in temps_a)
             {
                 if (heap.Length < number)
+                {
                     heap.InsertElement(x);
+                    res.Add(new Res() { date = "" + times[i], temp = "" + temps_a[i] });
+                }
                 else if (x < heap.PeekOfHeap())
                 {
-                    heap.RemoveMaximum();
+                    double _d = heap.RemoveMaximum();
                     heap.InsertElement(x);
+
+                    res.Add(new Res() { date = "" + times[i], temp = "" + temps_a[i] });
+                    Res _r = res.Where(z=>double.Parse(z.temp) == _d).FirstOrDefault();
+                    res.Remove(_r);
                 }
+                i++;
             }
-
-            for(int i = 0; i < temps_a.Count; i++)
-            {
-                if (heap.Array.Contains(temps_a[i]))
-                    index.Add(i);
-            }
-
-            foreach (int i in index)
-                res.Add(new Res() { date = "" + times[i], temp = "" + temps_a[i] });
-
-            return res.OrderBy(x=>double.Parse(x.temp)).Take(number).ToList();
-
-
-
-            /*Dictionary<string, string> res = new Dictionary<string, string>();
-            List<string> times = fcast_a.hourly.time;
-            List<double> temps_a = fcast_a.hourly.temperature_2m;
-            List<double> temps_b = fcast_b.hourly.temperature_2m;
-
-            if (number > temps_a.Count)
-                throw new Exception("to high number");
-
-            if (number < 0)
-                throw new Exception("to low number");
-
-            int[] index = new int[number];
-            for (int i = 0; i < number; i++)
-                index[i] = GeneralHelper.GetIndex(temps_a);
-
-            foreach (int i in index)
-                res.Add(times[i], "" + temps_b[i]);
-
-            return res;/**/
+            
+            return res.OrderBy(x=>double.Parse(x.temp)).ToList();
         }
 
         public static Forecast Copy(Forecast _b)

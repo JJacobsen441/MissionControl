@@ -54,7 +54,7 @@ namespace MissionControl.Common
             return;
         }
 
-        public void HeapifyBottomToTop(int index)
+        /*public void HeapifyBottomToTop(int index)
         {
             int parent = index / 2;
             // We are at root of the tree. Hence no more Heapifying is required.  
@@ -70,7 +70,7 @@ namespace MissionControl.Common
                 Array[parent] = tmp;
             }
             HeapifyBottomToTop(parent);
-        }
+        }*/
 
         public double RemoveMaximum()
         {
