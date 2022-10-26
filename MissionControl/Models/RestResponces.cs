@@ -1,9 +1,7 @@
 ﻿using MissionControl.Models.DTOs;
+using MissionControl.Statics;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MissionControl.Models
 {
@@ -81,7 +79,7 @@ namespace MissionControl.Models
         public double iss_latitude { get; set; }
         public double iss_longitude { get; set; }
         public int distance { get; set; }
-        public Dictionary<string, string> results { get; set; }
+        public List<Res> results { get; set; }
 
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }

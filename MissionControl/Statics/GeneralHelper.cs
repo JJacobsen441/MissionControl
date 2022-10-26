@@ -1,10 +1,17 @@
-﻿using MissionControl.Models;
+﻿using MissionControl.Common;
 using MissionControl.Models.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MissionControl.Statics
 {
+    public class Res
+    {
+        public string date { get; set; }
+        public string temp { get; set; }
+    }
+
     public class GeneralHelper
     {
         public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
@@ -66,7 +73,8 @@ namespace MissionControl.Statics
             return res;
         }
 
-        public static Dictionary<string, string> GetLowestTemps(Forecast fcast_a, Forecast fcast_b, int number) 
+
+        public static List<Res> GetLowestTemps(Forecast fcast_a, Forecast fcast_b, int number) 
         {
             /*
              * this algorithm return the correct result, but has very poor performance
@@ -80,7 +88,45 @@ namespace MissionControl.Statics
              *         heap.pop()
              *         heap.add(x)
              * */
-            Dictionary<string, string> res = new Dictionary<string, string>();
+
+            List<Res> res = new List<Res>();
+            List<int> index = new List<int>();
+            List<string> times = fcast_a.hourly.time;
+            List<double> temps_a = fcast_a.hourly.temperature_2m;
+            HeapMax heap = new HeapMax(number);
+
+            if (number > temps_a.Count)
+                throw new Exception("to high number");
+
+            if (number < 0)
+                throw new Exception("to low number");
+
+            
+            foreach (double x in temps_a)
+            {
+                if (heap.Length < number)
+                    heap.InsertElement(x);
+                else if (x < heap.PeekOfHeap())
+                {
+                    heap.RemoveMaximum();
+                    heap.InsertElement(x);
+                }
+            }
+
+            for(int i = 0; i < temps_a.Count; i++)
+            {
+                if (heap.Array.Contains(temps_a[i]))
+                    index.Add(i);
+            }
+
+            foreach (int i in index)
+                res.Add(new Res() { date = "" + times[i], temp = "" + temps_a[i] });
+
+            return res.OrderBy(x=>double.Parse(x.temp)).Take(number).ToList();
+
+
+
+            /*Dictionary<string, string> res = new Dictionary<string, string>();
             List<string> times = fcast_a.hourly.time;
             List<double> temps_a = fcast_a.hourly.temperature_2m;
             List<double> temps_b = fcast_b.hourly.temperature_2m;
@@ -98,7 +144,7 @@ namespace MissionControl.Statics
             foreach (int i in index)
                 res.Add(times[i], "" + temps_b[i]);
 
-            return res;
+            return res;/**/
         }
 
         public static Forecast Copy(Forecast _b)

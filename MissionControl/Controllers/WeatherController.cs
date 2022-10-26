@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Umbraco.Web.WebApi;
+using static MissionControl.Statics.GeneralHelper;
 
 namespace MissionControl.Controllers
 {
@@ -56,7 +57,7 @@ namespace MissionControl.Controllers
             {
                 DAL dal = new DAL();
                 ResultForecast1 _res = new ResultForecast1();
-                Dictionary<string, string> res = new Dictionary<string, string>();
+                List<Res> res = new List<Res>();
 
                 FacilityDTO dto = dal.GetClosest5min();
                 Forecast fcast_a = RestHelper.ForecastGET(dto.Latitude, dto.Longitude);

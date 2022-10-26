@@ -39,4 +39,6 @@ CustomBinderComposer				- added ModelBinder for endpoint mission/missionreport p
 
 BasicAuthenticationFilter			- updated to retrieve name, pass from webconfig
 
+GeneralHelper.GetLowestTemps		- added comment
+
 GeneralHelper.GetLowestTemps		- updated algorithm for lowest temps

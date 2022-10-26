@@ -356,6 +356,7 @@
     <Compile Include="Statics\ExtensionHelper.cs" />
     <Compile Include="Models\RestResponces.cs" />
     <Compile Include="Statics\GeneralHelper.cs" />
+    <Compile Include="Common\HeapMax.cs" />
     <Compile Include="Statics\RestHelper.cs" />
     <Compile Include="Statics\StaticsHelper.cs" />
     <Compile Include="Statics\ValidateHelper.cs" />
