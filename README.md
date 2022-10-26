@@ -44,3 +44,5 @@ GeneralHelper.GetLowestTemps		- added comment
 GeneralHelper.GetLowestTemps		- updated algorithm for lowest temps
 
 GeneralHelper.GetLowestTemps		- prettyfied code
+
+GeneralHelper.GetLowestTemps		- adjusted code

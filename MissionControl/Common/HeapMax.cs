@@ -54,7 +54,7 @@ namespace MissionControl.Common
             return;
         }
 
-        /*public void HeapifyBottomToTop(int index)
+        /*public void HeapifyUp(int index)
         {
             int parent = index / 2;
             // We are at root of the tree. Hence no more Heapifying is required.  
@@ -62,15 +62,15 @@ namespace MissionControl.Common
             {
                 return;
             }
-            // If Current value is smaller than its parent, then we need to swap  
-            if (Array[index] < Array[parent])
+            // If Current value is bigger than its parent, then we need to swap  
+            if (Array[index] > Array[parent])
             {
                 double tmp = Array[index];
                 Array[index] = Array[parent];
                 Array[parent] = tmp;
             }
-            HeapifyBottomToTop(parent);
-        }*/
+            HeapifyUp(parent);
+        }/**/
 
         public double RemoveMaximum()
         {
@@ -88,9 +88,9 @@ namespace MissionControl.Common
             //Insertion of value inside the array happens at the last index of the  array
             Array[Length] = value;
             Length++;
-            //BuildMaxHeap();
-            MaxHeapify(1);
-            //HeapifyBottomToTop(Length - 1);
+            BuildMaxHeap();
+            //MaxHeapify(1);
+            //HeapifyUp(Length - 1);
         }
 
         public double PeekOfHeap()
