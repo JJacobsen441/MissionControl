@@ -90,10 +90,10 @@ namespace MissionControl.Common
         {
 
             //Insertion of value inside the array happens at the last index of the  array
-            this.Array[Length] = value;
+            this.Array[this.Length] = value;
             this.Length++;
             //BuildMaxHeap();
-            MaxHeapifyUp(Length - 1);
+            MaxHeapifyUp(Length);
         }
 
         public double PeekOfHeap()
