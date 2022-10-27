@@ -7,6 +7,10 @@ namespace MissionControl.Common
 {
     public class HeapMax
     {
+        /*
+         * found on the internet, and then adjusted
+         * */
+
         public double[] Array { get; private set; }
         public int Length { get; private set; }
 
@@ -14,20 +18,20 @@ namespace MissionControl.Common
         {
             this.Length = 0;
             this.Array = new double[size];
-            BuildMaxHeap();
+            //BuildMaxHeap();
         }
 
         private void BuildMaxHeap()
         {
             for (int i = this.Length / 2; i > 0; i--)
             {
-                MaxHeapify(i);
+                MaxHeapifyDown(i);
             }
 
             return;
         }
 
-        public void MaxHeapify(int index)
+        public void MaxHeapifyDown(int index)
         {
             var left = 2 * index;
             var right = 2 * index + 1;
@@ -48,13 +52,13 @@ namespace MissionControl.Common
                 double temp = this.Array[max - 1];
                 this.Array[max - 1] = this.Array[index - 1];
                 this.Array[index - 1] = temp;
-                MaxHeapify(max);
+                MaxHeapifyDown(max);
             }
 
             return;
         }
 
-        /*public void HeapifyUp(int index)
+        public void MaxHeapifyUp(int index)
         {
             int parent = index / 2;
             // We are at root of the tree. Hence no more Heapifying is required.  
@@ -63,13 +67,13 @@ namespace MissionControl.Common
                 return;
             }
             // If Current value is bigger than its parent, then we need to swap  
-            if (Array[index] > Array[parent])
+            if (Array[index - 1] > Array[parent - 1])
             {
-                double tmp = Array[index];
-                Array[index] = Array[parent];
-                Array[parent] = tmp;
+                double tmp = this.Array[index - 1];
+                this.Array[index - 1] = this.Array[parent - 1];
+                this.Array[parent - 1] = tmp;
+                MaxHeapifyUp(parent);
             }
-            HeapifyUp(parent);
         }/**/
 
         public double RemoveMaximum()
@@ -78,7 +82,7 @@ namespace MissionControl.Common
 
             this.Array[0] = this.Array[this.Length - 1];
             this.Length--;
-            MaxHeapify(1);
+            MaxHeapifyDown(1);
             return maximum;
         }
 
@@ -86,11 +90,10 @@ namespace MissionControl.Common
         {
 
             //Insertion of value inside the array happens at the last index of the  array
-            Array[Length] = value;
-            Length++;
-            BuildMaxHeap();
-            //MaxHeapify(1);
-            //HeapifyUp(Length - 1);
+            this.Array[Length] = value;
+            this.Length++;
+            //BuildMaxHeap();
+            MaxHeapifyUp(Length - 1);
         }
 
         public double PeekOfHeap()
