@@ -6,6 +6,20 @@ namespace MissionControl.Models.DataAccessLayer
 {
     public class DAL
     {
+        public string KeyExists(string key)
+        {
+            ApiKeyBIZ biz = new ApiKeyBIZ();
+
+            return biz.KeyExists(key);
+        }
+
+        public string GenerateApiKey(string email)
+        {
+            ApiKeyBIZ biz = new ApiKeyBIZ();
+
+            return biz.CreateApiKey(email);
+        }
+
         public void CreateClosestFacilityByTimeStamp(FacilityDTO _f)
         {
             FacilityBIZ biz = new FacilityBIZ();

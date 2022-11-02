@@ -4,15 +4,9 @@ using MissionControl.Models;
 using MissionControl.Models.DataAccessLayer;
 using MissionControl.Models.DTOs;
 using MissionControl.Statics;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using System.Web.Http.Results;
 using Umbraco.Web.WebApi;
@@ -20,38 +14,11 @@ using Umbraco.Web.WebApi;
 namespace MissionControl.Controllers
 {
 
-    
+
     //[Authorize]
     public class ApiReportController : UmbracoApiController
     {
-        public class JsonHttpStatusResult<T> : JsonResult<T>
-        {
-            /*
-             * not my code
-             * */
-            private readonly HttpStatusCode _httpStatus;
-
-            public JsonHttpStatusResult(T content, ApiController controller, HttpStatusCode httpStatus)
-            : base(content, new JsonSerializerSettings(), new UTF8Encoding(), controller)
-            {
-                _httpStatus = httpStatus;
-            }
-
-            public override Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
-            {
-                var returnTask = base.ExecuteAsync(cancellationToken);
-                returnTask.Result.StatusCode = _httpStatus;// HttpStatusCode.BadRequest;
-                return returnTask;
-            }
-        }
-
-
-
-
-
-
-
-        [BasicAuthenticationFilter()]
+        [AuthenticationFilter()]
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("mission/missionreports")]
         public JsonResult<ResultReport1> GetMissionReports()
@@ -79,7 +46,7 @@ namespace MissionControl.Controllers
             }
         }
 
-        [BasicAuthenticationFilter()]
+        [AuthenticationFilter()]
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("mission/missionreport/{id}")]
         public JsonResult<ResultReport2> GetMissionReport(long id)
@@ -107,7 +74,7 @@ namespace MissionControl.Controllers
             }
         }
 
-        [BasicAuthenticationFilter()]
+        [AuthenticationFilter()]
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("mission/missionreport")]
         public JsonResult<ResultReport3> CreateMissionReport([ModelBinder(typeof(MissionPostCustomBinder))] ViewModelMissionreportPost _m)
@@ -144,7 +111,7 @@ namespace MissionControl.Controllers
             }
         }
 
-        [BasicAuthenticationFilter()]
+        [AuthenticationFilter()]
         [System.Web.Http.HttpPut]
         [System.Web.Http.Route("mission/missionreport")]
         public JsonResult<ResultReport3> UpdateMissionReport([ModelBinder(typeof(MissionPutCustomBinder))] ViewModelMissionreportPut _m)
@@ -181,7 +148,7 @@ namespace MissionControl.Controllers
             }
         }
 
-        [BasicAuthenticationFilter()]
+        [AuthenticationFilter()]
         [System.Web.Http.HttpDelete]
         [System.Web.Http.Route("mission/missionreport/{id}")]
         public JsonResult<ResultReport3> DeleteMissionReport(long id)

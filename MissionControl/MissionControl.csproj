@@ -328,20 +328,24 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ApiKeyController.cs" />
     <Compile Include="Controllers\ApiReportController.cs" />
     <Compile Include="Controllers\ApiUserController.cs" />
     <Compile Include="Controllers\WeatherController.cs" />
-    <Compile Include="Filters\BasicAuthenticationAttribute.cs" />
+    <Compile Include="Filters\AuthenticationAttribute.cs" />
     <Compile Include="Migrations\AttributeRoutingComposer.cs" />
     <Compile Include="Migrations\DataBaseComposer.cs" />
     <Compile Include="Migrations\ModelBinderComposer.cs" />
     <Compile Include="Migrations\ScheduleComposer.cs" />
+    <Compile Include="Models\BIZs\ApiKeyBIZ.cs" />
     <Compile Include="Models\BIZs\FacilityBIZ.cs" />
     <Compile Include="Models\BIZs\MissionReportBIZ.cs" />
     <Compile Include="Models\BIZs\UserBIZ.cs" />
     <Compile Include="Models\DataAccessLayer\DAL.cs" />
+    <Compile Include="Models\DB\ApiKey.cs" />
     <Compile Include="Models\DB\DBContext.cs" />
     <Compile Include="Models\DB\Facility.cs" />
+    <Compile Include="Models\DTOs\ApiKeyDTO.cs" />
     <Compile Include="Models\DTOs\FacilityDTO.cs" />
     <Compile Include="Models\DTOs\MissionImageDTO.cs" />
     <Compile Include="Models\DTOs\MissionReportDTO.cs" />
@@ -359,6 +363,7 @@
     <Compile Include="Common\HeapMax.cs" />
     <Compile Include="Statics\RestHelper.cs" />
     <Compile Include="Statics\StaticsHelper.cs" />
+    <Compile Include="Statics\ApiKeyGenerator.cs" />
     <Compile Include="Statics\ValidateHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -392,6 +397,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\ApiKey\" />
     <Folder Include="Views\ApiReport\" />
     <Folder Include="Views\ISS\" />
     <Folder Include="Views\Mission\" />

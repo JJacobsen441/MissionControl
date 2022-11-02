@@ -14,6 +14,7 @@ namespace MissionControl.Models
         public virtual DbSet<MissionReport> reports { get; set; }
         public virtual DbSet<MissionImage> images { get; set; }
         public virtual DbSet<Facilitys> facilitys { get; set; }
+        public virtual DbSet<ApiKeys> apikeys { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

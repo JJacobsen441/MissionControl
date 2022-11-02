@@ -115,8 +115,10 @@ MissionControl.Migrations.UpdateFKMissionReportsOnDelete, MissionControl, Versio
 MissionControl.Migrations.UpdateFKMissionImagesOnDelete, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MissionControl.Migrations.AddColumnISSLatitude, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MissionControl.Migrations.AddColumnISSLongitude, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+MissionControl.Migrations.AddApiKeyTable, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MissionControl.Migrations.CustomBinderComposer, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MissionControl.Migrations.ScheduleComposer, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+MissionControl.Controllers.ApiKeyController, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MissionControl.Controllers.ApiReportController, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MissionControl.Controllers.ApiUserController, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MissionControl.Controllers.WeatherController, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -415,6 +417,7 @@ Umbraco.Web.Mvc.RenderMvcController, Umbraco.Web, Version=8.0.0.0, Culture=neutr
 Umbraco.Web.WebApi.UmbracoApiController
 
 Umbraco.ModelsBuilder.Embedded.BackOffice.ModelsBuilderDashboardController, Umbraco.ModelsBuilder.Embedded, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
+MissionControl.Controllers.ApiKeyController, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MissionControl.Controllers.ApiReportController, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MissionControl.Controllers.ApiUserController, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MissionControl.Controllers.WeatherController, MissionControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null

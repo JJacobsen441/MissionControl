@@ -73,6 +73,15 @@ namespace MissionControl.Statics
             return res;
         }
 
+        private static Res GetByTemp(List<Res> list, double temp)
+        {
+            if (list.IsNull())
+                throw new Exception();
+
+            Res res = list.Where(z => double.Parse(z.temp) == temp).FirstOrDefault();
+
+            return res;
+        }
 
         public static List<Res> GetLowestTemps(Forecast fcast_a, Forecast fcast_b, int number) 
         {
@@ -101,19 +110,19 @@ namespace MissionControl.Statics
             int i = 0;
             foreach (double x in temps_a)
             {
+                Res _r = new Res() { date = "" + times[i], temp = "" + temps_a[i] };
                 if (heap.Length < number)
                 {
-                    heap.InsertElement(x);
-                    res.Add(new Res() { date = "" + times[i], temp = "" + temps_a[i] });
+                    heap.Push(x);
+                    res.Add(_r);
                 }
-                else if (x < heap.PeekOfHeap())
+                else if (x < heap.Peek())
                 {
-                    double _d = heap.RemoveMaximum();
-                    heap.InsertElement(x);
+                    double _d = heap.Pop();
+                    heap.Push(x);
 
-                    res.Add(new Res() { date = "" + times[i], temp = "" + temps_a[i] });
-                    Res _r = res.Where(z=>double.Parse(z.temp) == _d).FirstOrDefault();
-                    res.Remove(_r);
+                    res.Remove(GetByTemp(res, _d));
+                    res.Add(_r);
                 }
                 i++;
             }

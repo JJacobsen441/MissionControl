@@ -2,13 +2,41 @@
 using MissionControl.Statics;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace MissionControl.Models
 {
     public class RestResponces
     {
     }
-    
+
+    public class JsonHttpStatusResult<T> : JsonResult<T>
+    {
+        /*
+         * not my code
+         * */
+        private readonly HttpStatusCode _httpStatus;
+
+        public JsonHttpStatusResult(T content, ApiController controller, HttpStatusCode httpStatus)
+        : base(content, new JsonSerializerSettings(), new UTF8Encoding(), controller)
+        {
+            _httpStatus = httpStatus;
+        }
+
+        public override Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
+        {
+            var returnTask = base.ExecuteAsync(cancellationToken);
+            returnTask.Result.StatusCode = _httpStatus;// HttpStatusCode.BadRequest;
+            return returnTask;
+        }
+    }
+
     /*
      * I could have used inheritance also
      * */
@@ -81,6 +109,20 @@ namespace MissionControl.Models
         public int distance { get; set; }
         public List<Res> results { get; set; }
 
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
+    }
+
+
+
+
+
+
+
+    public class ResultApiKey1 : IResult
+    {
+        public string key { get; set; }
+        
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
     }

@@ -95,6 +95,13 @@ namespace MissionControl.Migrations
                 .To<AddColumnISSLongitude>("add-column-isslongitude");
 
 
+            migrationPlan.From("add-column-isslongitude")
+                .To<AddApiKeyTable>("add-apikey-table");
+
+
+            
+
+
 
 
 
@@ -610,6 +617,47 @@ namespace MissionControl.Migrations
             {
                 Logger.Debug<AddColumnISSLongitude>("The column in {DbTable} already exists, skipping", "AddColumnISSLongitude");
             }
+        }
+    }
+
+    public class AddApiKeyTable : MigrationBase
+    {
+        public AddApiKeyTable(IMigrationContext context) : base(context)
+        {
+        }
+
+        public override void Migrate()
+        {
+            Logger.Debug<AddApiKeyTable>("Running migration {MigrationStep}", "AddApiKeyTable");
+
+            // Lots of methods available in the MigrationBase class - discover with this.
+            if (!TableExists("ApiKey"))
+            {
+                Create.Table<ApiKeysSchema>().Do();
+            }
+            else
+            {
+                Logger.Debug<AddApiKeyTable>("The database table {DbTable} already exists, skipping", "ApiKeys");
+            }
+        }
+
+        [TableName("ApiKeys")]
+        [PrimaryKey("Id", AutoIncrement = true)]
+        [ExplicitColumns]
+        public class ApiKeysSchema
+        {
+            /*
+             * Id could be int
+             * */
+            [PrimaryKeyColumn(AutoIncrement = true, IdentitySeed = 1)]
+            [Column("Id")]
+            public long Id { get; set; }
+
+            [Column("Key")]
+            public string Key { get; set; }
+
+            [Column("Email")]
+            public string Email { get; set; }
         }
     }
 

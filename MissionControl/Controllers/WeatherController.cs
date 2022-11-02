@@ -3,48 +3,18 @@ using MissionControl.Models;
 using MissionControl.Models.DataAccessLayer;
 using MissionControl.Models.DTOs;
 using MissionControl.Statics;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Umbraco.Web.WebApi;
-using static MissionControl.Statics.GeneralHelper;
 
 namespace MissionControl.Controllers
 {
     public class WeatherController : UmbracoApiController
     {
-        public class JsonHttpStatusResult<T> : JsonResult<T>
-        {
-            /*
-             * not my code
-             * */
-            private readonly HttpStatusCode _httpStatus;
-
-            public JsonHttpStatusResult(T content, ApiController controller, HttpStatusCode httpStatus)
-            : base(content, new JsonSerializerSettings(), new UTF8Encoding(), controller)
-            {
-                _httpStatus = httpStatus;
-            }
-
-            public override Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
-            {
-                var returnTask = base.ExecuteAsync(cancellationToken);
-                returnTask.Result.StatusCode = _httpStatus;// HttpStatusCode.BadRequest;
-                return returnTask;
-            }
-        }
-
-        
-
-
-        [BasicAuthenticationFilter()]
+        [AuthenticationFilter()]
         [HttpGet]
         [Route("weather/forecast/{number}")]
         public JsonResult<ResultForecast1> GetForecast(int number)

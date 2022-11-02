@@ -64,4 +64,10 @@ namespace MissionControl.Models
         public long deleted_at { get; set; }
         public long user_id { get; set; }
     }
+
+    public class ViewModelApiKeyPost
+    {
+        //public long user_id { get; set; }
+        public string email { get; set; }
+    }
 }

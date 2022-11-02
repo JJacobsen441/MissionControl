@@ -76,7 +76,7 @@ namespace MissionControl.Common
             }
         }/**/
 
-        public double RemoveMaximum()
+        public double Pop()
         {
             double maximum = this.Array[0];
 
@@ -86,7 +86,7 @@ namespace MissionControl.Common
             return maximum;
         }
 
-        public void InsertElement(double value)
+        public void Push(double value)
         {
 
             //Insertion of value inside the array happens at the last index of the  array
@@ -96,7 +96,7 @@ namespace MissionControl.Common
             MaxHeapifyUp(Length);
         }
 
-        public double PeekOfHeap()
+        public double Peek()
         {
             if (Length == 0)
                 return double.MaxValue;

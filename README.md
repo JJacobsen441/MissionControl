@@ -48,3 +48,7 @@ GeneralHelper.GetLowestTemps		- prettyfied code
 GeneralHelper.GetLowestTemps		- adjusted code
 
 GeneralHelper.GetLowestTemps		- adjusted code
+
+GeneralHelper.GetLowestTemps		- adjusted code
+
+Authentication						- now uses ApiKey and not Basic Authentication

@@ -3,14 +3,9 @@ using MissionControl.Models;
 using MissionControl.Models.DataAccessLayer;
 using MissionControl.Models.DTOs;
 using MissionControl.Statics;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Umbraco.Web.WebApi;
@@ -20,34 +15,7 @@ namespace MissionControl.Controllers
     //[Authorize]
     public class ApiUserController : UmbracoApiController
     {
-        public class JsonHttpStatusResult<T> : JsonResult<T>
-        {
-            /*
-             * not my code
-             * */
-            private readonly HttpStatusCode _httpStatus;
-
-            public JsonHttpStatusResult(T content, ApiController controller, HttpStatusCode httpStatus)
-            : base(content, new JsonSerializerSettings(), new UTF8Encoding(), controller)
-            {
-                _httpStatus = httpStatus;
-            }
-
-            public override Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
-            {
-                var returnTask = base.ExecuteAsync(cancellationToken);
-                returnTask.Result.StatusCode = _httpStatus;// HttpStatusCode.BadRequest;
-                return returnTask;
-            }
-        }
-
-
-
-
-
-
-
-        [BasicAuthenticationFilter()]
+        [AuthenticationFilter()]
         [HttpGet]
         [Route("mission/users")]
         public JsonResult<ResultUsers1> GetUsers()
@@ -75,7 +43,7 @@ namespace MissionControl.Controllers
             }
         }
 
-        [BasicAuthenticationFilter()]
+        [AuthenticationFilter()]
         [HttpGet]
         [Route("mission/user/{id}")]
         public JsonResult<ResultUser2> GetUser(long id)
@@ -103,7 +71,7 @@ namespace MissionControl.Controllers
             }
         }
 
-        [BasicAuthenticationFilter()]
+        [AuthenticationFilter()]
         [HttpPost]
         [Route("mission/user")]
         public JsonResult<ResultUser3> CreateUser(ViewModelUserPost _u)
@@ -137,7 +105,7 @@ namespace MissionControl.Controllers
             }
         }
 
-        [BasicAuthenticationFilter()]
+        [AuthenticationFilter()]
         [HttpPut]
         [Route("mission/user")]
         public JsonResult<ResultUser3> UpdateUser(ViewModelUserPut _u)
@@ -171,7 +139,7 @@ namespace MissionControl.Controllers
             }
         }
 
-        [BasicAuthenticationFilter()]
+        [AuthenticationFilter()]
         [HttpDelete]
         [Route("mission/user/{id}")]
         public JsonResult<ResultUser3> DeleteUser(long id)

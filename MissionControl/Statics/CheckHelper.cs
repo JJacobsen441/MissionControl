@@ -168,5 +168,19 @@ namespace MissionControl.Statics
 
             return _ok_a && _ok_b && _ok_c && _ok_d && _ok_e && _ok_f && _ok_g && _ok_h && _ok_i && _ok_j;
         }
+
+        public static bool CheckApiKey(ViewModelApiKeyPost model)
+        {
+            if (model.IsNull())
+                return false;
+
+            /*
+             * use fx 'no_tag' for no tags
+             * */
+            bool _ok_a;
+            model.email = Check(model.email, false, true, 0, false, new List<string>() { "no_script" }, CharacterHelper.All(false), out _ok_a);
+            
+            return _ok_a;
+        }
     }
 }
