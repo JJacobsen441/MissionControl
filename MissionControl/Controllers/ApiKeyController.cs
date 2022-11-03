@@ -1,5 +1,7 @@
-﻿using MissionControl.Models;
+﻿using MissionControl.Filters;
+using MissionControl.Models;
 using MissionControl.Models.DataAccessLayer;
+using MissionControl.Models.DTOs;
 using MissionControl.Statics;
 using System;
 using System.Net;
@@ -11,11 +13,35 @@ namespace MissionControl.Controllers
 {
     public class ApiKeyController : UmbracoApiController
     {
-        
+
+        [AuthenticationFilter()]
+        [HttpGet]
+        [Route("apikey/get/{id}")]
+        public JsonResult<ResultApiKey1> GetApiKey(long id)
+        {
+            try
+            {
+                ResultApiKey1 res = new ResultApiKey1();
+                res.Message = "";
+
+                DAL dal = new DAL();
+                UserDTO _u = dal.GetUser(id);
+                ApiKeyDTO _key = dal.GetApiKey(_u.email);
                 
+                res.key = _key.Key;
+                
+                return new JsonHttpStatusResult<ResultApiKey1>(res, this, HttpStatusCode.OK);
+            }
+            catch (Exception _e)
+            {
+                ResultApiKey1 res = new ResultApiKey1 { key = null, Message = _e.Message };
+                return new JsonHttpStatusResult<ResultApiKey1>(res, this, HttpStatusCode.BadRequest);
+            }
+        }
+
         [HttpPost]
-        [Route("generator/apikey")]
-        public JsonResult<ResultApiKey1> GetApiKey(ViewModelApiKeyPost _m)
+        [Route("apikey/generate")]
+        public JsonResult<ResultApiKey1> GenerateApiKey(ViewModelApiKeyPost _m)
         {
             /*
              * generation of apikey should not be done here (as an open api call)

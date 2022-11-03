@@ -13,6 +13,13 @@ namespace MissionControl.Models.DataAccessLayer
             return biz.KeyExists(key);
         }
 
+        public ApiKeyDTO GetApiKey(string email)
+        {
+            ApiKeyBIZ biz = new ApiKeyBIZ();
+
+            return biz.GetApiKey(email);
+        }
+
         public string GenerateApiKey(string email)
         {
             ApiKeyBIZ biz = new ApiKeyBIZ();

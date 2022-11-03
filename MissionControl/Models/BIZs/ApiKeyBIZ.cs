@@ -41,7 +41,24 @@ namespace MissionControl.Models.BIZs
                 return false;
 
             return true;
-        }/**/        
+        }/**/
+
+        public ApiKeyDTO GetApiKey(string email)
+        {
+            if (email.IsNull())
+                throw new Exception("some error");
+
+            using (DBContext _db = new DBContext())
+            {
+                IQueryable<ApiKeys> _q = _db.apikeys.Where(x => x.Email == email);
+
+                ApiKeys _k = _q.AsEnumerable().FirstOrDefault();
+                if (_k.IsNull())
+                    throw new Exception("key not found");
+
+                return ToDTO(_k);
+            }
+        }
 
         public string CreateApiKey(string email)
         {
@@ -60,10 +77,10 @@ namespace MissionControl.Models.BIZs
                     ApiKeys __a = new ApiKeys();
                     __a.Key = key;
                     __a.Email = email;
-                
+
                     _db.apikeys.Add(__a);
                 }
-                
+
                 _db.SaveChanges();
             }
 
