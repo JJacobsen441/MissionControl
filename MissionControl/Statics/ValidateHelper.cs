@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace MissionControl.Statics
@@ -16,12 +17,13 @@ namespace MissionControl.Statics
                 str = str.Remove(charindex, 1);
             return str;
         }
-
-        /*public static string Sanitize(string str, bool allow_newline, bool allow_upper, string allow_tag, char[] allowed, out bool ok)
+        
+        public static string Sanitize(string str, bool allow_newline, bool allow_upper, bool allow_numeric, List<string> allow_tag, char[] allowed, out bool ok)
         {
             /*
-             * allow_tag should be list or array
-             * /
+             * maybe this is a wrong approach, but this is as far as Ive gotten with sanitizing
+             * there are many pitfalls when sanitizing, I havent thought of them all:)
+             * */
 
             if (str.IsNull())
                 throw new Exception();
@@ -29,57 +31,58 @@ namespace MissionControl.Statics
             if (allow_tag.IsNull())
                 throw new Exception();
 
-            if (allow_tag == "")
+            if (allow_tag.Contains(""))
                 throw new Exception();
 
             ok = true;
 
-            char[] tags = { '!', '1', '2', '3', '4', '5' };
+            //char[] tags = { '!', '1', '2', '3', '4', '5' };
             char[] numeric = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
             char[] alphalower = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'æ', 'ø', 'å' };
             char[] alphaupper = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Æ', 'Ø', 'Å' };
             char[] newline = { '\r', '\n' };
-
-
-            for (int i = 0; i < str.Length; i++)
+            //char[] deci = { ',', '.' };
+            
+            List<string> html = new List<string>()
             {
-                char c = str.ElementAt(i);
-                if (i <= str.Length - allow_tag.Length - 2 && str.Substring(i, allow_tag.Length + 2) == "<" + allow_tag + ">")
-                    i += allow_tag.Length + 1;
-                else if (i <= str.Length - allow_tag.Length - 3 && str.Substring(i, allow_tag.Length + 3) == "</" + allow_tag + ">")
-                    i += allow_tag.Length + 2;
-                else if (i <= str.Length - allow_tag.Length - 4 && str.Substring(i, allow_tag.Length + 4) == "<" + allow_tag + " />")
-                    i += allow_tag.Length + 3;
-                else if (c == '<')
-                {
-                    int j = i + 1;
+                "!doctype", 
+                "a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", 
+                "b",  "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", 
+                "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", 
+                "em", "embed", 
+                "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", 
+                "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hr", "html", 
+                "i", "iframe", "img", "input", "ins", 
+                "kbd", 
+                "label","legend", "li", "link",
+                "main", "map", "mark", "meta", "meter",
+                "nav", "noframes", "noscript",
+                "object", "ol", "optgroup", "option", "output",
+                "p", "param", "picture", "pre", "progress", "q", 
+                "rp", "rt", "ruby", 
+                "s", "samp", "script", "section", "select", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg",
+                "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", 
+                "u", "ul", 
+                "var", "video", 
+                "wbr" 
+            };
 
-                    while (j < i + 15 && j < str.Length)
-                    {
-                        bool firstrun = j == i + 1;
-                        char elem = str.ElementAt(j);
-                        j++;
-
-                        if (alphalower.Contains(elem) || alphaupper.Contains(elem) || tags.Contains(elem))
-                            continue;
-
-                        ok = firstrun ? true : elem != '>';
-                        if (!ok)
-                            str = "";
-                         
-                        break;
-                    }
-                }
-
-                if (!ok)
-                    return str;                
+            string tmp = str.ToLower().Trim();
+            foreach(string _t in html)
+            {
+                if (allow_tag.Contains(_t))
+                    continue;
+                if(tmp.Contains("<" + _t + ">"))
+                    ok = false;
             }
 
+            if (!ok)
+                return "";
 
             for (int i = 0; i < str.Length; i++)
             {
                 char c = str.ElementAt(i);
-                if (allowed.Contains(c) || (allow_newline && newline.Contains(c)) || (allow_upper && alphaupper.Contains(c)) || alphalower.Contains(c) || numeric.Contains(c))
+                if (allowed.Contains(c) || (allow_newline && newline.Contains(c)) || (allow_upper && alphaupper.Contains(c)) || alphalower.Contains(c) || (allow_numeric && numeric.Contains(c)))
                     continue;
                 
                 str = RemoveCharacter(str, c);
@@ -88,9 +91,9 @@ namespace MissionControl.Statics
             }
 
             return str;
-        }/**/
+        }
 
-        public static string Sanitize(string str, bool allow_newline, bool allow_upper, List<string> allow_tag, char[] allowed, out bool ok)
+        public static string _Sanitize(string str, bool allow_newline, bool allow_upper, List<string> allow_tag, char[] allowed, out bool ok)
         {
             /*
              * maybe this is a wrong approach, but this is as far as Ive gotten with sanitizing

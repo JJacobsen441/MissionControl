@@ -24,7 +24,7 @@ namespace MissionControl.Statics
             }
         }
 
-        private static string Check(string val, bool decode, bool allow_upper, int len, bool allow_newline, List<string> allow_tag, char[] allowed, out bool _ok)
+        private static string Check(string val, bool decode, bool allow_upper, int len, bool allow_newline, bool allow_numeric, List<string> allow_tag, char[] allowed, out bool _ok)
         {
             if (!val.IsNullOrEmpty())
             {
@@ -38,7 +38,7 @@ namespace MissionControl.Statics
                     if (!allow_upper)
                         val = val.ToLower();
 
-                    val = ValidateHelper.Sanitize(val, allow_newline, allow_upper, allow_tag, allowed, out _ok);
+                    val = ValidateHelper.Sanitize(val, allow_newline, allow_upper, allow_numeric, allow_tag, allowed, out _ok);
                     if (_ok)
                         return val;
                 }
@@ -88,13 +88,13 @@ namespace MissionControl.Statics
              * use fx 'no_tag' for no tags
              * */
             bool _ok_a, _ok_b, _ok_c, _ok_d, _ok_e, _ok_f, _ok_g;
-            model.first_name = Check(model.first_name, false, true, 0, false, new List<string>() { "no_script" }, CharacterHelper.Name(), out _ok_a);
-            model.last_name = Check(model.last_name, false, true, 0, false, new List<string>() { "no_script" }, CharacterHelper.Name(), out _ok_b);
-            model.code_name = Check(model.code_name, false, true, 4, false, new List<string>() { "no_script" }, CharacterHelper.Name(), out _ok_c);
-            model.user_name = Check(model.user_name, false, true, 4, false, new List<string>() { "no_script" }, CharacterHelper.Name(), out _ok_d);
-            model.email = Check(model.email, false, false, 5, false, new List<string>() { "no_script" }, CharacterHelper.All(false), out _ok_e);
-            model.password = Check(model.password, false, true, 6, false, new List<string>() { "no_script" }, CharacterHelper.All(false), out _ok_f);
-            model.avatar = Check(model.avatar, false, true, 0, false, new List<string>() { "no_script" }, CharacterHelper.All(false), out _ok_g);
+            model.first_name = Check(model.first_name, false, true, 0, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_a);
+            model.last_name = Check(model.last_name, false, true, 0, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_b);
+            model.code_name = Check(model.code_name, false, true, 4, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_c);
+            model.user_name = Check(model.user_name, false, true, 4, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_d);
+            model.email = Check(model.email, false, false, 5, false, true, new List<string>() { "no_tag" }, CharacterHelper.All(false), out _ok_e);
+            model.password = Check(model.password, false, true, 6, false, true, new List<string>() { "no_tag" }, CharacterHelper.All(false), out _ok_f);
+            model.avatar = Check(model.avatar, false, true, 0, false, true, new List<string>() { "no_tag" }, CharacterHelper.All(false), out _ok_g);
 
             return _ok_a && _ok_b && _ok_c && _ok_d && _ok_e && _ok_f && _ok_g;
         }
@@ -108,13 +108,13 @@ namespace MissionControl.Statics
              * use fx 'no_tag' for no tags
              * */
             bool _ok_a, _ok_b, _ok_c, _ok_d, _ok_e, _ok_f, _ok_g;
-            model.first_name = Check(model.first_name, false, true, 0, false, new List<string>() { "no_script" }, CharacterHelper.Name(), out _ok_a);
-            model.last_name = Check(model.last_name, false, true, 0, false, new List<string>() { "no_script" }, CharacterHelper.Name(), out _ok_b);
-            model.code_name = Check(model.code_name, false, true, 4, false, new List<string>() { "no_script" }, CharacterHelper.Name(), out _ok_c);
-            model.user_name = Check(model.user_name, false, true, 4, false, new List<string>() { "no_script" }, CharacterHelper.Name(), out _ok_d);
-            model.email = Check(model.email, false, false, 5, false, new List<string>() { "no_script" }, CharacterHelper.All(false), out _ok_e);
-            model.password = Check(model.password, false, true, 6, false, new List<string>() { "no_script" }, CharacterHelper.All(false), out _ok_f);
-            model.avatar = Check(model.avatar, false, true, 0, false, new List<string>() { "no_script" }, CharacterHelper.All(false), out _ok_g);
+            model.first_name = Check(model.first_name, false, true, 0, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_a);
+            model.last_name = Check(model.last_name, false, true, 0, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_b);
+            model.code_name = Check(model.code_name, false, true, 4, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_c);
+            model.user_name = Check(model.user_name, false, true, 4, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_d);
+            model.email = Check(model.email, false, false, 5, false, true, new List<string>() { "no_tag" }, CharacterHelper.All(false), out _ok_e);
+            model.password = Check(model.password, false, true, 6, false, true, new List<string>() { "no_tag" }, CharacterHelper.All(false), out _ok_f);
+            model.avatar = Check(model.avatar, false, true, 0, false, true, new List<string>() { "no_tag" }, CharacterHelper.All(false), out _ok_g);
 
             return _ok_a && _ok_b && _ok_c && _ok_d && _ok_e && _ok_f && _ok_g;
         }
@@ -132,8 +132,8 @@ namespace MissionControl.Statics
              * use fx 'no_tag' for no tags
              * */
             bool _ok_a, _ok_b, _ok_c, _ok_d, _ok_e, _ok_f, _ok_g, _ok_h, _ok_i, _ok_j;
-            model.name = Check(model.name, false, true, 0, false, new List<string>() { "no_script" }, CharacterHelper.Name(), out _ok_a);
-            model.description = Check(model.description, false, true, 0, true, new List<string>() { "b", "strong" }, CharacterHelper.All(true), out _ok_b);
+            model.name = Check(model.name, false, true, 0, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_a);
+            model.description = Check(model.description, false, true, 0, true, true, new List<string>() { "b", "strong" }, CharacterHelper.All(true), out _ok_b);
             model.lat = CheckTude(model.lat, out _ok_c);
             model.lng = CheckTude(model.lng, out _ok_d);
             model.mission_date = CheckDate(model.mission_date, out _ok_e);
@@ -155,8 +155,8 @@ namespace MissionControl.Statics
              * use fx 'no_tag' for no tags
              * */
             bool _ok_a, _ok_b, _ok_c, _ok_d, _ok_e, _ok_f, _ok_g, _ok_h, _ok_i, _ok_j;
-            model.name = Check(model.name, false, true, 0, false, new List<string>() { "no_script" }, CharacterHelper.Name(), out _ok_a);
-            model.description = Check(model.description, false, true, 0, true, new List<string>() { "b", "strong" }, CharacterHelper.All(false), out _ok_b);
+            model.name = Check(model.name, false, true, 0, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_a);
+            model.description = Check(model.description, false, true, 0, true, true, new List<string>() { "b", "strong" }, CharacterHelper.All(false), out _ok_b);
             model.lat = CheckTude(model.lat, out _ok_c);
             model.lng = CheckTude(model.lng, out _ok_d);
             model.mission_date = CheckDate(model.mission_date, out _ok_e);
@@ -178,7 +178,7 @@ namespace MissionControl.Statics
              * use fx 'no_tag' for no tags
              * */
             bool _ok_a;
-            model.email = Check(model.email, false, true, 0, false, new List<string>() { "no_script" }, CharacterHelper.All(false), out _ok_a);
+            model.email = Check(model.email, false, true, 0, false, true, new List<string>() { "no_tag" }, CharacterHelper.All(false), out _ok_a);
             
             return _ok_a;
         }
