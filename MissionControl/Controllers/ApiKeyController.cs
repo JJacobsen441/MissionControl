@@ -16,7 +16,7 @@ namespace MissionControl.Controllers
 
         [AuthenticationFilter()]
         [HttpGet]
-        [Route("apikey/get/{id}")]
+        [Route("key/apikey/{id}")]
         public JsonResult<ResultApiKey1> GetApiKey(long id)
         {
             try
@@ -40,7 +40,7 @@ namespace MissionControl.Controllers
         }
 
         [HttpPost]
-        [Route("apikey/generate")]
+        [Route("key/generate")]
         public JsonResult<ResultApiKey1> GenerateApiKey(ViewModelApiKeyPost _m)
         {
             /*
