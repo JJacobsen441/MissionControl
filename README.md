@@ -56,3 +56,5 @@ Authentication						- now uses ApiKey and not Basic Authentication
 ApiKeyController					- added GetApiKey function
 
 ValidateHelper						- updated Sanitize
+
+CheckHelper							- added CheckMail

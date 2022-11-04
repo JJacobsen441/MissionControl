@@ -1,38 +1,41 @@
 ﻿using MissionControl.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 
 namespace MissionControl.Statics
 {
     public class CheckHelper
     {
-        public static bool IsValidEmail(string email)
+        public static string IsValidEmail(string email, out bool _ok)
         {
+            _ok = false;
+            if (string.IsNullOrEmpty(email))
+                return "";
+
             try
             {
-                if (string.IsNullOrEmpty(email))
-                    return false;
-
                 var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
+                _ok = addr.Address == email;
+                if (_ok)
+                    return email;
+                return "";
             }
             catch
             {
-                return false;
+                return "";
             }
         }
 
         private static string Check(string val, bool decode, bool allow_upper, int len, bool allow_newline, bool allow_numeric, List<string> allow_tag, char[] allowed, out bool _ok)
         {
+            _ok = true;
             if (!val.IsNullOrEmpty())
             {
                 if (val.Length >= len)
                 {
                     val = val.Trim();
                     
-                    if(decode )
+                    if(decode)
                         val = HttpUtility.UrlDecode(val);
                     
                     if (!allow_upper)
@@ -45,6 +48,19 @@ namespace MissionControl.Statics
             }
             _ok = false;
             return val;
+        }
+
+        private static string CheckMail(string val, out bool _ok)
+        {
+            val = Check(val, false, true, 0, false, true, new List<string>() { "no_tag" }, CharacterHelper.All(false), out _ok);
+            if (_ok)
+            {
+                val = IsValidEmail(val, out _ok);
+                if (_ok)
+                    return val;
+            }
+
+            return "";
         }
 
         private static long CheckID(long val, out bool _ok)
@@ -92,7 +108,7 @@ namespace MissionControl.Statics
             model.last_name = Check(model.last_name, false, true, 0, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_b);
             model.code_name = Check(model.code_name, false, true, 4, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_c);
             model.user_name = Check(model.user_name, false, true, 4, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_d);
-            model.email = Check(model.email, false, false, 5, false, true, new List<string>() { "no_tag" }, CharacterHelper.All(false), out _ok_e);
+            model.email = CheckMail(model.email, out _ok_e);
             model.password = Check(model.password, false, true, 6, false, true, new List<string>() { "no_tag" }, CharacterHelper.All(false), out _ok_f);
             model.avatar = Check(model.avatar, false, true, 0, false, true, new List<string>() { "no_tag" }, CharacterHelper.All(false), out _ok_g);
 
@@ -112,7 +128,7 @@ namespace MissionControl.Statics
             model.last_name = Check(model.last_name, false, true, 0, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_b);
             model.code_name = Check(model.code_name, false, true, 4, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_c);
             model.user_name = Check(model.user_name, false, true, 4, false, true, new List<string>() { "no_tag" }, CharacterHelper.Name(), out _ok_d);
-            model.email = Check(model.email, false, false, 5, false, true, new List<string>() { "no_tag" }, CharacterHelper.All(false), out _ok_e);
+            model.email = CheckMail(model.email, out _ok_e);
             model.password = Check(model.password, false, true, 6, false, true, new List<string>() { "no_tag" }, CharacterHelper.All(false), out _ok_f);
             model.avatar = Check(model.avatar, false, true, 0, false, true, new List<string>() { "no_tag" }, CharacterHelper.All(false), out _ok_g);
 
@@ -177,10 +193,10 @@ namespace MissionControl.Statics
             /*
              * use fx 'no_tag' for no tags
              * */
-            bool _ok_a;
-            model.email = Check(model.email, false, true, 0, false, true, new List<string>() { "no_tag" }, CharacterHelper.All(false), out _ok_a);
+            bool _ok;
+            model.email = CheckMail(model.email, out _ok);
             
-            return _ok_a;
+            return _ok;
         }
     }
 }
